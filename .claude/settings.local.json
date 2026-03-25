@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pytest tests/test_data.py tests/data/test_preprocess.py -v --no-cov)",
+      "Bash(pip install:*)"
+    ]
+  }
+}
