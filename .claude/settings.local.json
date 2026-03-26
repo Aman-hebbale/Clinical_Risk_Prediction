@@ -19,7 +19,14 @@
       "Bash(set PYTHONIOENCODING=utf-8)",
       "Bash(PYTHONIOENCODING=utf-8 PYTHONUTF8=1 python -m src.training.train)",
       "Bash(\"D:\\\\Aman\\\\projects with:*)",
-      "Bash(PYTHONUTF8=1 .venv/Scripts/python.exe -m src.training.train)"
+      "Bash(PYTHONUTF8=1 .venv/Scripts/python.exe -m src.training.train)",
+      "Bash(pytest)",
+      "Bash(curl -s http://localhost:8000/health)",
+      "Bash(curl -s -X POST http://localhost:8000/predict/ -H \"Content-Type: application/json\" -d '{\"\"age\"\":55,\"\"sex\"\":1,\"\"cp\"\":2,\"\"trestbps\"\":130,\"\"chol\"\":250,\"\"fbs\"\":0,\"\"restecg\"\":1,\"\"thalach\"\":150,\"\"exang\"\":0,\"\"oldpeak\"\":1.5,\"\"slope\"\":1,\"\"ca\"\":0,\"\"thal\"\":2}')",
+      "Bash(netstat -ano)",
+      "Bash(findstr :8000)",
+      "Bash(taskkill /F /PID 21268)",
+      "Bash(taskkill:*)"
     ]
   }
 }

@@ -1,25 +1,23 @@
 """FastAPI dependency injection helpers."""
 
 import logging
-from functools import lru_cache
+
+from fastapi import Request
 
 from src.models.base import BaseModel as PredictModel
-from src.models.registry import load_model
 
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-@lru_cache(maxsize=1)
-def get_model() -> PredictModel:
-    """Return the singleton model instance (loaded once on first call).
+def get_model(request: Request) -> PredictModel:
+    """Return the model instance stored in app state during startup.
 
     Raises
     ------
     RuntimeError
-        If the model file cannot be found or loaded.
+        If the model was not loaded at startup.
     """
-    try:
-        return load_model()
-    except FileNotFoundError as exc:
-        logger.error("Could not load model: %s", exc)
-        raise RuntimeError(str(exc)) from exc
+    model: PredictModel | None = getattr(request.app.state, "model", None)
+    if model is None:
+        raise RuntimeError("Model is not loaded. Check startup logs.")
+    return model

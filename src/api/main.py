@@ -2,16 +2,30 @@
 
 import logging
 import os
+from contextlib import asynccontextmanager
+from typing import AsyncIterator
 
 import uvicorn
+from dotenv import load_dotenv
 from fastapi import FastAPI
 
 from src.api.routers.predict import router as predict_router
 from src.api.schemas import HealthResponse, ModelInfoResponse
-from src.models.registry import get_model_path
+from src.models.registry import get_model_path, load_model
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger: logging.Logger = logging.getLogger(__name__)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    """Eagerly load the model at startup so errors surface immediately."""
+    app.state.model = load_model()
+    logger.info("Model loaded successfully from %s", get_model_path())
+    yield
+
 
 app: FastAPI = FastAPI(
     title="MedPredict",
@@ -19,6 +33,7 @@ app: FastAPI = FastAPI(
     version="0.1.0",
     docs_url="/docs",
     redoc_url="/redoc",
+    lifespan=lifespan,
 )
 
 app.include_router(predict_router)
