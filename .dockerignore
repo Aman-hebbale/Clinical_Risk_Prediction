@@ -1,0 +1,45 @@
+# Version control
+.git
+.gitignore
+
+# Python byte-code and caches
+__pycache__
+*.py[cod]
+*.pyo
+.mypy_cache
+.ruff_cache
+
+# Test artefacts
+tests/
+.pytest_cache
+coverage.xml
+.coverage
+
+# Notebooks (EDA only — not needed at runtime)
+notebooks/
+
+# MLflow local tracking data
+mlruns/
+mlflow.db
+
+# Secrets — never bake into the image
+.env
+.env.*
+
+# Editor / OS noise
+.vscode/
+.idea/
+*.DS_Store
+Thumbs.db
+
+# Documentation
+docs/
+*.md
+
+# CI configuration
+.github/
+
+# Build artefacts
+dist/
+build/
+*.egg-info/

@@ -5,29 +5,30 @@ tools: Write, Read, Glob, Grep, Edit, Bash
 model: sonnet
 ---
 
-Task: Initialize the project.
+The project predicts heart disease using the UCI Heart Disease dataset (303 patients, 13 features). It has: a PostgreSQL data pipeline (src/data/), sklearn + PyTorch models (src/models/, src/training/), a FastAPI API (src/api/), Docker + CI/CD, and MLflow tracking.
 
-1. Create directory structure with __init__.py files:
-   src/data/, src/models/, src/api/, src/training/, tests/, notebooks/, docs/
+Task: Polish documentation.
 
-2. Create pyproject.toml with these dependencies:
-   pandas, numpy, scikit-learn, torch, fastapi, uvicorn, mlflow,
-   psycopg2-binary, sqlalchemy, ucimlrepo, python-dotenv,
-   pytest, pytest-cov, ruff, mypy, httpx
+Step 1 — Rewrite README.md:
+- One-line description at top
+- Badges: Python 3.11, License MIT, CI passing, Coverage
+- Mermaid architecture diagram showing: UCI Dataset → PostgreSQL → Feature Engineering → Model Training (MLflow) → FastAPI → Docker
+- "Quick Start" section: git clone, cp .env.example .env, docker-compose up
+- "API Usage" section with curl examples for /predict and /health
+- "Dataset" section: link to UCI, explain 13 features briefly, cite the creators
+- "Tech Stack" section listing all technologies
+- "Project Structure" showing the file tree
 
-3. Create .env.example with:
-   DATABASE_URL=postgresql://localhost:5432/medpredict
-   MLFLOW_TRACKING_URI=http://localhost:5000
-   MODEL_PATH=models/best_model.pkl
+Step 2 — Create docs/architecture.md with Mermaid diagrams of:
+- Data flow from UCI download through PostgreSQL to model training
+- API request lifecycle from JSON input to risk score output
 
-4. Create .gitignore (Python, .env, __pycache__, mlruns/, *.pkl)
+Step 3 — Create docs/model-card.md:
+- Model type, training data description (UCI Heart Disease, Cleveland subset)
+- Performance metrics table (from MLflow results)
+- Known limitations: small dataset (303 rows), class imbalance, Cleveland subset only
+- Ethical considerations: model should not be used for actual clinical decisions
 
-5. Write a skeleton README.md that says:
-   "MedPredict — Heart disease prediction API using UCI Heart Disease dataset,
-   served via FastAPI, tracked with MLflow, containerized with Docker."
-   Include badges for Python 3.11, License MIT, CI status.
+Step 4 — Create CONTRIBUTING.md with setup guide and commit conventions
 
-6. Set up ruff config in pyproject.toml: line-length=88, select=["E","F","I","W"]
-   Set up mypy strict mode.
-
-Use conventional commits. Every file needs type hints.
+Step 5 — Review all files in src/ — verify every function has type hints and a Google-style docstring. List any that are missing so I can fix them.
