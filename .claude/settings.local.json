@@ -6,7 +6,12 @@
       "Bash(python -m pytest)",
       "Bash(python -m venv .venv)",
       "Bash(.venv/Scripts/pip install:*)",
-      "Bash(.venv/Scripts/python -m pytest)"
+      "Bash(.venv/Scripts/python -m pytest)",
+      "Bash(curl -s http://localhost:5000/health)",
+      "Bash(python -m mlflow --version)",
+      "Bash(pip list:*)",
+      "Bash(PYTHONPATH=. python -m src.training.train)",
+      "Bash(PYTHONIOENCODING=utf-8 PYTHONPATH=. python -m src.training.train)"
     ]
   }
 }
