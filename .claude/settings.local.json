@@ -11,7 +11,15 @@
       "Bash(python -m mlflow --version)",
       "Bash(pip list:*)",
       "Bash(PYTHONPATH=. python -m src.training.train)",
-      "Bash(PYTHONIOENCODING=utf-8 PYTHONPATH=. python -m src.training.train)"
+      "Bash(PYTHONIOENCODING=utf-8 PYTHONPATH=. python -m src.training.train)",
+      "Bash(find /d/Aman/projects with claude/medpredict/tests -type f -name *.py)",
+      "Bash(python -m src.training.train)",
+      "Bash(pip show:*)",
+      "Bash(python -c \"import sys; print\\(sys.executable\\)\")",
+      "Bash(set PYTHONIOENCODING=utf-8)",
+      "Bash(PYTHONIOENCODING=utf-8 PYTHONUTF8=1 python -m src.training.train)",
+      "Bash(\"D:\\\\Aman\\\\projects with:*)",
+      "Bash(PYTHONUTF8=1 .venv/Scripts/python.exe -m src.training.train)"
     ]
   }
 }

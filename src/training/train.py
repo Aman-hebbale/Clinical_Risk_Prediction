@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 import mlflow
+import mlflow.pytorch
 import mlflow.sklearn
 import pandas as pd
 from dotenv import load_dotenv
@@ -17,6 +18,7 @@ from src.models.base import BaseModel
 from src.models.logistic_model import LogisticModel
 from src.models.random_forest_model import RandomForestModel
 from src.models.sklearn_model import SklearnModel
+from src.models.torch_model import TorchModel
 
 load_dotenv()
 
@@ -49,6 +51,20 @@ BASELINES: list[dict[str, Any]] = [
             n_estimators=200, learning_rate=0.05, max_depth=3
         ),
         "params": {"n_estimators": 200, "learning_rate": 0.05, "max_depth": 3},
+    },
+    {
+        "name": "pytorch_mlp",
+        "model_type": "PyTorchMLP",
+        "model_instance": TorchModel(
+            hidden_dims=[64, 32], dropout=0.3, lr=1e-3, epochs=100, batch_size=32
+        ),
+        "params": {
+            "hidden_dims": "[64, 32]",
+            "dropout": 0.3,
+            "lr": 1e-3,
+            "epochs": 100,
+            "batch_size": 32,
+        },
     },
 ]
 
@@ -132,10 +148,16 @@ def main() -> None:
             logger.info("%s metrics: %s", model_type, metrics)
 
             model.save(output_path)
-            mlflow.sklearn.log_model(
-                model._pipeline,  # noqa: SLF001
-                artifact_path=artifact_path,
-            )
+            if isinstance(model, TorchModel):
+                mlflow.pytorch.log_model(
+                    model.get_torch_module(),
+                    artifact_path=artifact_path,
+                )
+            else:
+                mlflow.sklearn.log_model(
+                    model._pipeline,  # noqa: SLF001
+                    artifact_path=artifact_path,
+                )
             logger.info("Model artifact saved to %s", output_path)
 
             run_ids.append(run.info.run_id)
