@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(python -m pytest tests/test_data.py tests/data/test_preprocess.py -v --no-cov)",
-      "Bash(pip install:*)"
+      "Bash(pip install:*)",
+      "Bash(python -m pytest)",
+      "Bash(python -m venv .venv)",
+      "Bash(.venv/Scripts/pip install:*)",
+      "Bash(.venv/Scripts/python -m pytest)"
     ]
   }
 }
